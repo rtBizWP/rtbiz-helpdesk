@@ -1828,6 +1828,7 @@ if ( ! class_exists( 'Rtbiz_HD_Import_Operation' ) ) {
 					}
 					$returnArray['last_reply'] = esc_attr( human_time_diff( strtotime( $comment->comment_date ), current_time( 'timestamp' ) ) ) . ' ago by ' . $commentlink;
 
+					do_action( 'rt_hd_ajax_after_new_ticket_followup', $returnArray, $comment_post_ID );
 			}
 			echo json_encode( $returnArray );
 			ob_end_flush();
@@ -2193,6 +2194,9 @@ if ( ! class_exists( 'Rtbiz_HD_Import_Operation' ) ) {
 			global $rtbiz_hd_module;
 			$labels = $rtbiz_hd_module->labels;
 			rtbiz_hd_update_ticket_updated_by_user( $post_id, get_current_user_id() );
+
+			do_action( 'rt_hd_ajax_front_end_after_ticket_status_changed', $post_id, $old, $post_status );
+
 			global $rtbiz_hd_email_notification;
 			$body = $labels['name'].' Status changed from <strong>'.rtbiz_hd_status_markup( $old ).'</strong> to <strong>'.rtbiz_hd_status_markup( $post_status ).'</strong>.';
 			$rtbiz_hd_email_notification->notification_ticket_updated( $post_id, $labels['name'], $body, array() );
@@ -2225,6 +2229,8 @@ if ( ! class_exists( 'Rtbiz_HD_Import_Operation' ) ) {
 
 				$labels = $rtbiz_hd_module->labels;
 				rtbiz_hd_update_ticket_updated_by_user( $post_id, get_current_user_id() );
+
+				do_action( 'rt_hd_ajax_front_end_after_ticket_assignee_changed', $post_id, $old_post->post_author, $new_assignee );
 
 				global $rtbiz_hd_email_notification;
 

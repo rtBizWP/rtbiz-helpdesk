@@ -82,6 +82,9 @@ if ( !class_exists( 'Rtbiz_HD_Admin' ) ) {
 			// migration class
 			$rtbiz_hd_migration = new Rtbiz_HD_Migration();
 
+			// Slack integration class.
+			new Rtbiz_HD_Slack_Integration();
+
 		}
 
 		public function register_menu() {

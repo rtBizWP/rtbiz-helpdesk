@@ -79,6 +79,7 @@ if ( ! class_exists( 'Rtbiz_HD_Short_Code' ) ) {
 			if ( $is_logged_in && ( ! $email_only_support || $author_access ) ) {
 				$post_id = $rtbiz_hd_product_support->save_support_form();
 				if ( ! empty( $post_id ) && is_int( $post_id ) ) {
+					do_action( 'rt_hd_after_new_support_ticket_saved', $post_id );
 					?>
 					<div id="info" class="success rthd-notice">Your support request has been submitted. We will get back
 						to you for
